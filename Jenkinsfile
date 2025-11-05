@@ -29,7 +29,7 @@ pipeline {
                 sh '''
                     python3 -m venv venv
                     . venv/bin/activate
-                    pip install --no-cache-dir pytest pytest-junitxml requests selenium locust
+                    pip install --no-cache-dir pytest requests selenium locust
                 '''
             }
         }
