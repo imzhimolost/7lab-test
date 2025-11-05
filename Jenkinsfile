@@ -39,7 +39,7 @@ pipeline {
                 script {
                     sh '''
                         echo "🔧 Запуск OpenBMC в QEMU..."
-                        ./scripts/run-openbmc.sh
+                        ./scripts/run_openbmc.sh
                     '''
                 }
             }
