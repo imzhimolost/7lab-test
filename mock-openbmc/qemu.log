@@ -1,0 +1,4 @@
+127.0.0.1 - - [25/Sep/2025 04:48:56] "GET /redfish/v1 HTTP/1.1" 200 -
+127.0.0.1 - - [25/Sep/2025 04:48:59] "GET /redfish/v1 HTTP/1.1" 200 -
+127.0.0.1 - - [25/Sep/2025 04:48:59] "GET /redfish/v1/Managers/bmc HTTP/1.1" 200 -
+127.0.0.1 - - [25/Sep/2025 04:48:59] "GET /redfish/v1/Systems/system HTTP/1.1" 200 -
