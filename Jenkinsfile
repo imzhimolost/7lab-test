@@ -39,7 +39,6 @@ pipeline {
                 script {
                     sh '''
                         echo "🔧 Запуск OpenBMC в QEMU..."
-                        . venv/bin/activate
                         ./scripts/run-openbmc.sh
                     '''
                 }
