@@ -26,7 +26,11 @@ pipeline {
 
         stage('Install Python Dependencies') {
             steps {
-                sh 'pip3 install --no-cache-dir pytest pytest-junitxml requests selenium locust'
+                sh '''
+                    python3 -m venv venv
+                    source venv/bin/activate
+                    pip install --no-cache-dir pytest pytest-junitxml requests selenium locust
+                '''
             }
         }
 
@@ -35,6 +39,7 @@ pipeline {
                 script {
                     sh '''
                         echo "🔧 Запуск OpenBMC в QEMU..."
+                        source venv/bin/activate
                         ./scripts/run-openbmc.sh
                     '''
                 }
@@ -50,6 +55,7 @@ pipeline {
             steps {
                 sh '''
                     echo "🧪 Запуск API-тестов..."
+                    source venv/bin/activate
                     cd tests
                     python3 -m pytest test_bmc_api.py --junitxml="../${API_TEST_REPORT}" -v
                 '''
@@ -66,6 +72,7 @@ pipeline {
             steps {
                 sh '''
                     echo "🌐 Запуск WebUI-тестов..."
+                    source venv/bin/activate
                     cd webui-tests
                     xvfb-run -a python3 -m pytest test_webui.py --junitxml="../${WEBUI_TEST_REPORT}" -v
                 '''
@@ -82,6 +89,7 @@ pipeline {
             steps {
                 sh '''
                     echo "⚡ Запуск нагрузочного тестирования..."
+                    source venv/bin/activate
                     cd load-tests
                     locust -f locustfile.py --headless \
                         --users 5 \
