@@ -2,18 +2,16 @@ pipeline {
     agent any
 
     environment {
-        // Имена файлов отчётов
         QEMU_LOG         = 'qemu.log'
         API_TEST_REPORT  = 'api-test-results.xml'
         WEBUI_TEST_REPORT = 'webui-test-results.xml'
         LOAD_TEST_REPORT = 'load-test-results.json'
         
-        // Путь к PID QEMU для корректного завершения
         QEMU_PID_FILE    = '/tmp/qemu.pid'
     }
 
     options {
-        timeout(time: 15, unit: 'MINUTES')  // Защита от зависаний
+        timeout(time: 15, unit: 'MINUTES')
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }
 
@@ -38,7 +36,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        echo "🔧 Запуск OpenBMC в QEMU..."
+                        echo "Запуск OpenBMC в QEMU..."
                         ./scripts/run_openbmc.sh
                     '''
                 }
@@ -53,7 +51,7 @@ pipeline {
         stage('Run API (Redfish) Tests') {
             steps {
                 sh '''
-                    echo "🧪 Запуск API-тестов..."
+                    echo "Запуск API-тестов..."
                     . venv/bin/activate
                     cd tests
                     python3 -m pytest test_bmc_api.py --junitxml="../${API_TEST_REPORT}" -v
@@ -70,7 +68,7 @@ pipeline {
         stage('Run WebUI Tests') {
             steps {
                 sh '''
-                    echo "🌐 Запуск WebUI-тестов..."
+                    echo "Запуск WebUI-тестов..."
                     . venv/bin/activate
                     cd webui-tests
                     xvfb-run -a python3 -m pytest test_webui.py --junitxml="../${WEBUI_TEST_REPORT}" -v
@@ -87,7 +85,7 @@ pipeline {
         stage('Run Load Tests') {
             steps {
                 sh '''
-                    echo "⚡ Запуск нагрузочного тестирования..."
+                    echo "Запуск нагрузочного тестирования..."
                     . venv/bin/activate
                     cd load-tests
                     locust -f locustfile.py --headless \
@@ -109,7 +107,7 @@ pipeline {
     post {
         always {
             script {
-                echo "⏹️  Остановка QEMU (если запущен)..."
+                echo "⏹Остановка QEMU (если запущен)..."
                 sh '''
                     if [ -f "${QEMU_PID_FILE}" ]; then
                         PID=$(cat "${QEMU_PID_FILE}")
@@ -128,10 +126,10 @@ pipeline {
             }
         }
         success {
-            echo "✅ Пайплайн завершён успешно!"
+            echo "Пайплайн завершён успешно!"
         }
         failure {
-            echo "❌ Пайплайн завершился с ошибкой"
+            echo "Пайплайн завершился с ошибкой"
         }
     }
 }

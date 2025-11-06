@@ -1,4 +1,3 @@
-# webui-tests/test_webui.py
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -12,7 +11,6 @@ def browser():
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    # Нет необходимости в SSL-опциях, так как используем HTTP
     driver = webdriver.Chrome(options=options)
     yield driver
     driver.quit()
@@ -30,7 +28,6 @@ def test_successful_login(browser):
     browser.find_element(By.ID, "password").send_keys("0penBmc")
     browser.find_element(By.ID, "login").click()
     
-    # Ждём появления статуса успеха
     WebDriverWait(browser, 10).until(
         EC.visibility_of_element_located((By.ID, "status"))
     )

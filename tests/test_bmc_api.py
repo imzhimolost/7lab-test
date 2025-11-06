@@ -1,11 +1,9 @@
-# tests/test_bmc_api.py
 import requests
 import pytest
 
 BASE_URL = "http://localhost:4430"
 AUTH = ("root", "0penBmc")
 
-# Отключаем предупреждения (опционально)
 requests.packages.urllib3.disable_warnings()
 
 def test_redfish_root():

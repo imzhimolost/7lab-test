@@ -1,4 +1,3 @@
-# Dockerfile
 FROM jenkins/jenkins:lts
 
 USER root
@@ -16,7 +15,6 @@ RUN apt-get update && \
         ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем Python-пакеты с обходом защиты (безопасно в Docker!)
 RUN pip3 install --no-cache-dir --break-system-packages \
         pytest \
         requests \

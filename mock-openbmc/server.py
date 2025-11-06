@@ -1,10 +1,4 @@
 #!/usr/bin/env python3
-"""
-OpenBMC Mock Server (HTTP-only)
-- Эмулирует Redfish API
-- Эмулирует WebUI
-- Работает на http://localhost:4430
-"""
 
 import http.server
 import socketserver
@@ -85,11 +79,11 @@ class OpenBMCRequestHandler(http.server.SimpleHTTPRequestHandler):
 if __name__ == '__main__':
     PORT = 4430
     httpd = socketserver.TCPServer(('localhost', PORT), OpenBMCRequestHandler)
-    print(f"✅ OpenBMC Mock запущен на http://localhost:{PORT}")
+    print(f"OpenBMC Mock запущен на http://localhost:{PORT}")
     print("   Redfish API: /redfish/v1")
     print("   WebUI: /")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print("\n⏹️  Остановка сервера...")
+        print("\n⏹  Остановка сервера...")
         httpd.shutdown()
